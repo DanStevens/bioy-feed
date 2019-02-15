@@ -79,7 +79,7 @@ class BioyEpisodeFeedifier {
     return {
       title: episode.title,
       url: `${this.feedOptions.link}/${episode.cid}`,
-      date: new Date(episode.scheduled_for),
+      date: new Date(episode.realday),
       published: new Date(episode.scheduled_for),
       // link: `${this.feedOptions.link}/${epsiode.cid}`,
       description: episode.teaser,
@@ -94,8 +94,8 @@ class BioyEpisodeFeedifier {
       // }]
       enclosure: {
         url: episode.audio_path,
-        type: "audio/mpeg"
-        //size: TODO (tip: Use HEAD request on URL)
+        type: "audio/mpeg",
+        size: episode.audio_data.length
       }
     };
   }
