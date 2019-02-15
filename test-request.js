@@ -4,7 +4,8 @@ const BioyEpisodeFeedifier = require("./alpha-api").BioyEpisodeFeedifier;
 
 let client = new BioyClient(package.name);
 let feedifier = new BioyEpisodeFeedifier();
-client.request("/bioy/2/public/listFullCommentariesByBatch/en/2019-02-01/2019-02-28")
+// client.request("/bioy/2/public/listFullCommentariesByBatch/en/2019-02-01/2019-02-28")
+client.listFullCommentaries("2019-02-01", "2019-02-28", 31)
   .then(function (res) {
     const feed = feedifier.feedify(res);
     //console.log(feed.rss2());

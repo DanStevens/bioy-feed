@@ -1,17 +1,37 @@
-const request = require('request-promise-native');
-const Feed = require('feed').Feed;
+const request = require("request-promise-native");
+const Feed = require("feed").Feed;
+
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+};
 
 class BioyClient {
-  constructor(userAgent, host = 'api.alpha.org') {
+  constructor(userAgent, host = "api.alpha.org") {
     this.host = host.trim();
-    this.userAgent = userAgent.trim()
+    this.userAgent = userAgent.trim();
   }
 
-  request(query) {
-    query = query.trim().replace(/^\//, '/'); // Trim whitespace and leading /'s
+  listFullCommentaries(start, end, limit = 10, language = "en") {
+    let now = new Date();
+    start = isNaN(start) ? new Date(start) : now.addDays(start);
+    end = isNaN(end) ? new Date(end) : now.addDays(end);
+
+    let query = `/bioy/2/public/listFullCommentariesByBatch/${language}/${this._d2s(start)}/${this._d2s(end)}/${limit}`;
+    return this._request(query);
+  }
+
+  _d2s(date) {
+    return date.toISOString().slice(0, 10);
+  }
+
+  _request(query) {
+    query = query.trim().replace(/^\//, "/"); // Trim whitespace and leading /"s
+    console.debug(`Requesting URI https://${this.host}/${query}`);
     let options = {
       uri: `https://${this.host}/${query}`,
-      headers: { 'User-Agent': this.userAgent },
+      headers: { "User-Agent": this.userAgent },
       json: true
     };
     return request(options);

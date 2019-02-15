@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/feed", (reqLocal, resLocal) => {
-  client.request("/bioy/2/public/listFullCommentariesByBatch/en/2019-02-01/2019-02-28")
+  client.listFullCommentaries("2019-02-01", "2019-02-28", 31)
     .then(resRemote => {
       const feed = feedifier.feedify(resRemote);
       // resLocal.type("application/atom+xml");
