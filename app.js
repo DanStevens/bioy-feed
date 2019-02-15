@@ -7,6 +7,10 @@ const alpha = require("./alpha-api");
 const client = new alpha.BioyClient(package.name);
 const feedifier = new  alpha.BioyEpisodeFeedifier();
 
+app.get("/", (req, res) => {
+  res.redirect("/feed");
+});
+
 app.get("/feed", (reqLocal, resLocal) => {
   client.request("/bioy/2/public/listFullCommentariesByBatch/en/2019-02-01/2019-02-28")
     .then(resRemote => {
