@@ -78,10 +78,10 @@ class BioyEpisodeFeedifier {
   _episodeToFeedItem(episode) {
     return {
       title: episode.title,
-      url: `${this.feedOptions.link}/${episode.cid}`,
+      url: `${this.feedOptions.siteUrl}/${episode.cid}`,
       date: new Date(episode.realday),
       published: new Date(episode.scheduled_for),
-      // link: `${this.feedOptions.link}/${epsiode.cid}`,
+      // link: `${this.feedOptions.siteUrl}/${epsiode.cid}`,
       description: episode.teaser,
       content: episode.teaser,
       copyright: this.feedOptions.copyright,
