@@ -20,7 +20,7 @@
   "homepage": "https://github.com/DanStevens/bioy-feed#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "feed": "^2.0.2",
+    "podcast": "^1.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },

@@ -1,5 +1,5 @@
 const request = require("request-promise-native");
-const Feed = require("feed").Feed;
+const Podcast = require("podcast");
 
 Date.prototype.addDays = function(days) {
   var date = new Date(this.valueOf());
@@ -48,14 +48,12 @@ class BioyEpisodeFeedifier {
       description: "Start your day with the Bible in One Year, a free Bible reading app with commentary by Nicky and Pippa Gumbel. Nicky Gumbel is the Vicar of HTB in London and pioneer of Alpha.",
       categories: [ "Religion" ],
       id: "https://www.bibleinoneyear.org/bioy/commentary",
-      link: "https://www.bibleinoneyear.org/bioy/commentary",
-      image: "https://www.bibleinoneyear.org/sites/all/themes/bioy/images/icon.png",
+      siteUrl: "https://www.bibleinoneyear.org/bioy/commentary",
+      imageUrl: "https://www.bibleinoneyear.org/sites/all/themes/bioy/images/icon.png",
       favicon: "https://www.bibleinoneyear.org/sites/all/themes/bioy/favicon.ico",
       copyright: "© Alpha International",
-      author: {
-        name: "Nicky Gumbel",
-        link: "https://www.bibleinoneyear.org/about",
-      },
+      author:"Nicky Gumbel",
+      ttl: 1440,
       contributors: [
         {
           name: "Nicky Gumbel",
@@ -70,9 +68,7 @@ class BioyEpisodeFeedifier {
   }
 
   feedify(json) {
-    const feed = new Feed(this.feedOptions);
-    feed.categories = this.feedOptions.categories;
-    feed.contributors = this.feedOptions.contributors;
+    const feed = new Podcast(this.feedOptions);
 
     json.body.forEach(episode => feed.addItem(this._episodeToFeedItem(episode)));
 
@@ -82,10 +78,9 @@ class BioyEpisodeFeedifier {
   _episodeToFeedItem(episode) {
     return {
       title: episode.title,
-      id: `${this.feedOptions.link}/${episode.cid}`,
+      url: `${this.feedOptions.link}/${episode.cid}`,
       date: new Date(episode.scheduled_for),
       published: new Date(episode.scheduled_for),
-      link: episode.audio_path,
       // link: `${this.feedOptions.link}/${epsiode.cid}`,
       description: episode.teaser,
       content: episode.teaser,
@@ -93,6 +88,15 @@ class BioyEpisodeFeedifier {
       image: this.feedOptions.image,
       author: [ this.feedOptions.author ],
       contributor: this.feedOptions.contributors,
+      // extensions: [{
+      //   name: "enclosure",
+      //   objects: episode.audio_path
+      // }]
+      enclosure: {
+        url: episode.audio_path,
+        type: "audio/mpeg"
+        //size: TODO (tip: Use HEAD request on URL)
+      }
     };
   }
 }

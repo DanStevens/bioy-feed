@@ -17,8 +17,8 @@ app.get("/feed", (reqLocal, resLocal) => {
       const feed = feedifier.feedify(resRemote);
       // resLocal.type("application/atom+xml");
       // resLocal.send(feed.atom1());
-      resLocal.type("application/rss+xml");
-      resLocal.send(feed.rss2());
+      resLocal.type("text/xml");
+      resLocal.send(feed.buildXml());
 
     })
     .catch(err => {
