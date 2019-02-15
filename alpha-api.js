@@ -72,7 +72,7 @@ class BioyEpisodeFeedifier {
       copyright: this.feedOptions.copyright,
       image: this.feedOptions.image,
       author: [ this.feedOptions.author ],
-      contributors: this.feedOptions.contributors,
+      contributor: this.feedOptions.contributors,
     };
   }
 }
