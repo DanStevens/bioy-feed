@@ -77,14 +77,14 @@ class BioyEpisodeFeedifier {
 
   _episodeToFeedItem(episode) {
     const episodeUrl = `${this.feedOptions.siteUrl}/${episode.cid}`;
-    const content = `<article>
-<section id="introduction">${episode.introduction}</section>
-<section id="psalm_proverbs">${episode.psalm_proverbs}</section>
-<section id="new_testament">${episode.new_testament}</section>
-<section id="old_testament">${episode.old_testament}</section>
-<section id="pippa_adds">${episode.pippa_adds}</section>
-<section id="reference">${episode.reference}</section>
-</article>`;
+    const content =
+`${episode.teaser}<a href="${episodeUrl}">More...</a>
+<p>Bible readings:</p><ul>
+<li>${episode.day.psalm || episode.day.proverbs}</li>
+<li>${episode.day.new_testament}</li>
+<li>${episode.day.old_testament}</li>
+</ul>
+`;
 
     return {
       title: episode.title,
