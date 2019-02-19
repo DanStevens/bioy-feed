@@ -1,5 +1,6 @@
 const request = require("request-promise-native");
 const Podcast = require("podcast");
+const sha1 = require("hash.js/lib/hash/sha/1");
 
 Date.prototype.addDays = function(days) {
   var date = new Date(this.valueOf());
@@ -11,6 +12,7 @@ class BioyClient {
   constructor(userAgent, host = "api.alpha.org") {
     this.host = host.trim();
     this.userAgent = userAgent.trim();
+    this._cache = {};
   }
 
   listFullCommentaries(start, end, limit = 10, language = "en") {
@@ -22,22 +24,34 @@ class BioyClient {
     return this._request(query);
   }
 
+  resetCache() {
+    this._cache = {};
+  }
+
   _d2s(date) {
     return date.toISOString().slice(0, 10);
   }
 
   _request(query) {
     query = query.trim().replace(/^\//, "/"); // Trim whitespace and leading /"s
-    console.debug(`Requesting URI https://${this.host}/${query}`);
-    let options = {
-      uri: `https://${this.host}/${query}`,
-      headers: { "User-Agent": this.userAgent },
-      json: true
-    };
-    return request(options);
-  }
+    const hash = sha1().update(query).digest("hex");
 
-  
+    // Check cache
+    if (this._cache[hash]) {
+      console.debug(`Cache hit (${hash})`);
+      return this._cache[hash];
+
+    } else {
+      console.debug(`Cache miss. Requesting URI https://${this.host}/${query}`);
+      let options = {
+        uri: `https://${this.host}/${query}`,
+        headers: { "User-Agent": this.userAgent },
+        json: true
+      };
+      console.log(`Caching response with key ${hash}`);
+      return this._cache[hash] = request(options);
+    }
+  }
 }
 
 class BioyEpisodeFeedifier {

@@ -1,6 +1,6 @@
 {
   "name": "bioy-feed",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -20,6 +20,8 @@
   "homepage": "https://github.com/DanStevens/bioy-feed#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "hash.js": "^1.1.7",
+    "node-schedule": "^1.3.2",
     "podcast": "^1.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"

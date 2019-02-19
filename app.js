@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ALPHA_API_HOST = process.env.ALPHA_API_HOST || "api.alpha.org";
 
 const package = require("./package.json");
 const alpha = require("./alpha-api");
-const client = new alpha.BioyClient(package.name);
+const client = new alpha.BioyClient(package.name, ALPHA_API_HOST);
 const feedifier = new  alpha.BioyEpisodeFeedifier();
 
 app.get("/", (req, res) => {
@@ -34,4 +35,13 @@ app.listen(PORT, error => {
   } else {
     console.log("express started");
   }
+});
+
+// Assuming Alpha schedules new entries at 2 AM UTC, reset caches just before this
+const CACHE_RESET_SCHEDULE = process.env.CACHE_RESET_SCHEDULE || "59 59 1 * * * *";
+
+const schedule = require("node-schedule");
+schedule.scheduleJob(CACHE_RESET_SCHEDULE, () => {
+  console.log("Resetting caches");
+  client.resetCache();
 });
