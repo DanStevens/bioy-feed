@@ -76,22 +76,29 @@ class BioyEpisodeFeedifier {
   }
 
   _episodeToFeedItem(episode) {
+    const episodeUrl = `${this.feedOptions.siteUrl}/${episode.cid}`;
+    const content =
+`${episode.teaser}<a href="${episodeUrl}">More...</a>
+<p>Bible readings:</p><ul>
+<li>${episode.day.psalm || episode.day.proverbs}</li>
+<li>${episode.day.new_testament}</li>
+<li>${episode.day.old_testament}</li>
+</ul>
+`;
+
     return {
       title: episode.title,
-      url: `${this.feedOptions.siteUrl}/${episode.cid}`,
+      url: episodeUrl,
       date: new Date(episode.realday),
       published: new Date(episode.scheduled_for),
-      // link: `${this.feedOptions.siteUrl}/${epsiode.cid}`,
-      description: episode.teaser,
-      content: episode.teaser,
+      // link: episodeUrl,
+      // description: episode.teaser,
+      description: content,
+      // content: content,
       copyright: this.feedOptions.copyright,
       image: this.feedOptions.image,
       author: [ this.feedOptions.author ],
       contributor: this.feedOptions.contributors,
-      // extensions: [{
-      //   name: "enclosure",
-      //   objects: episode.audio_path
-      // }]
       enclosure: {
         url: episode.audio_path,
         type: "audio/mpeg",
