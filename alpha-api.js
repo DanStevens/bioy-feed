@@ -15,8 +15,8 @@ class BioyClient {
 
   listFullCommentaries(start, end, limit = 10, language = "en") {
     let now = new Date();
-    start = isNaN(start) ? new Date(start) : now.addDays(start);
-    end = isNaN(end) ? new Date(end) : now.addDays(end);
+    start = isNaN(Number(start)) ? new Date(start) : now.addDays(Number(start));
+    end = isNaN(Number(end)) ? new Date(end) : now.addDays(Number(end));
 
     let query = `/bioy/2/public/listFullCommentariesByBatch/${language}/${this._d2s(start)}/${this._d2s(end)}/${limit}`;
     return this._request(query);

@@ -11,8 +11,9 @@ app.get("/", (req, res) => {
   res.redirect("/feed");
 });
 
-app.get("/feed", (reqLocal, resLocal) => {
-  client.listFullCommentaries("2019-02-01", "2019-02-28", 31)
+app.get("/feed/:start?/:end?/:limit?", (reqLocal, resLocal) => {
+  client.listFullCommentaries(reqLocal.params.start || -19, reqLocal.params.end || 0,
+    reqLocal.params.limit || 20)
     .then(resRemote => {
       const feed = feedifier.feedify(resRemote);
       // resLocal.type("application/atom+xml");
