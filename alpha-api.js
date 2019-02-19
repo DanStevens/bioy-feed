@@ -24,6 +24,10 @@ class BioyClient {
     return this._request(query);
   }
 
+  resetCache() {
+    this._cache = {};
+  }
+
   _d2s(date) {
     return date.toISOString().slice(0, 10);
   }
