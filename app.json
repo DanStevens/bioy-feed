@@ -1,0 +1,10 @@
+{
+  "name": "BIOY Feed",
+  "description": "A node.js app that provides an RSS feed of Alpha International's Bible In One Year.",
+  "keywords": [ "rss-feed", "religion", "bible" ],
+  "website": "https://bioy-feed.herokuapp.com/feed",
+  "repository": "https://github.com/DanStevens/bioy-feed",
+  "logo": "https://bioy-feed.herokuapp.com/bioy-logo.png",
+  "success_url": "/feed",
+  "stack": "heroku-20"
+}
