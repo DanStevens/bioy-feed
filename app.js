@@ -1,12 +1,20 @@
 const express = require("express");
+const path = require("path");
+var os = require("os");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ALPHA_API_HOST = process.env.ALPHA_API_HOST || "api.alpha.org";
+
+app.use(express.static(path.join(__dirname, "public")));
 
 const package = require("./package.json");
 const alpha = require("./alpha-api");
 const client = new alpha.BioyClient(package.name, ALPHA_API_HOST);
 const feedifier = new  alpha.BioyEpisodeFeedifier();
+
+// Suffix feed image and icon with request host
+feedifier.feedOptions.imageUrl = "//" + os.hostname + feedifier.feedOptions.imageUrl;
+feedifier.feedOptions.favicon = "//" + os.hostname + feedifier.feedOptions.favicon;
 
 app.get("/", (req, res) => {
   res.redirect("/feed");

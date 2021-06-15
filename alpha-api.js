@@ -61,21 +61,21 @@ class BioyEpisodeFeedifier {
       title: "Bible In One Year",
       description: "Start your day with the Bible in One Year, a free Bible reading app with commentary by Nicky and Pippa Gumbel. Nicky Gumbel is the Vicar of HTB in London and pioneer of Alpha.",
       categories: [ "Religion" ],
-      id: "https://www.bibleinoneyear.org/bioy/commentary",
-      siteUrl: "https://www.bibleinoneyear.org/bioy/commentary",
-      imageUrl: "https://www.bibleinoneyear.org/sites/all/themes/bioy/images/icon.png",
-      favicon: "https://www.bibleinoneyear.org/sites/all/themes/bioy/favicon.ico",
+      id: "https://bibleinoneyear.org/en",
+      siteUrl: "https://bibleinoneyear.org/en",
+      imageUrl: "/bioy-logo.png",
+      favicon: "/bioy-favicon.ico",
       copyright: "© Alpha International",
       author:"Nicky Gumbel",
       ttl: 1440,
       contributors: [
         {
           name: "Nicky Gumbel",
-          link: "https://www.bibleinoneyear.org/about",
+          link: "https://bibleinoneyear.org/en/about/",
         },
         {
           name: "Pippa Gumbel",
-          link: "https://www.bibleinoneyear.org/about",
+          link: "https://bibleinoneyear.org/en/about/",
         }
       ],
     };
@@ -90,7 +90,7 @@ class BioyEpisodeFeedifier {
   }
 
   _episodeToFeedItem(episode) {
-    const episodeUrl = `${this.feedOptions.siteUrl}/${episode.cid}`;
+    const episodeUrl = `${this.feedOptions.siteUrl}/classic/${episode.did}`;
     const content =
 `${episode.teaser}<a href="${episodeUrl}">More...</a>
 <p>Bible readings:</p><ul>
